@@ -8,6 +8,8 @@ import http from "http";
 
 import { connectDB } from "./utils/db.js";
 
+import authRoutes from "./routes/authRoutes.js";
+
 const app = express();
 const httpServer = http.createServer(app);
 
@@ -18,6 +20,9 @@ app.use(
   }),
 );
 app.use(cookieParser());
+
+// routes
+app.use("/api/auth", authRoutes);
 
 try {
   await connectDB();
