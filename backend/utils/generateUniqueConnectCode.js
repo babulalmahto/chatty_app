@@ -1,6 +1,8 @@
 import { customAlphabet } from "nanoid";
 import User from "../models/User.js";
 
+const generateCode = customAlphabet("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 6);
+
 const generateUniqueConnectCode = async () => {
   let code, exists;
 

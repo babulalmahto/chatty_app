@@ -1,11 +1,14 @@
-import { use } from "react";
-import User from "../models/User";
+// import { use } from "react";
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import User from "../models/User.js";
 import generateUniqueConnectCode from "../utils/generateUniqueConnectCode.js";
 
 class AuthController {
   static async register(req, res) {
     try {
       const { fullName, username, email, password } = req.body;
+      console.log("req.body=====>", req.body);
 
       if (!fullName || !username || !email || !password) {
         return res.status(400).json({ message: "All fields are required" });
