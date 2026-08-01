@@ -5,7 +5,7 @@ import LoginForm from "./partials/LoginForm";
 import RegisterForm from "./partials/RegisterForm";
 
 const Auth: React.FC = () => {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
 
   return (
     <>

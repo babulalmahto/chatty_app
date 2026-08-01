@@ -63,7 +63,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitch }) => {
   return (
     <>
       <h2 className="text-2xl font-bold text-dark mb-2">Create Your Account</h2>
-      <p>Join our community</p>
+      <p className="text-gray-500 text-sm mb-8">Join our community</p>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label
@@ -180,7 +180,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSwitch }) => {
         </button>
       </form>
       <div className="text-center text-sm mt-4">
-        <span className="text-gray-600">Already have an account</span>
+        <span className="text-gray-600">Already have an account? </span>
         <span
           onClick={onSwitch}
           className="text-primary font-medium cursor-pointer hover:underline"
