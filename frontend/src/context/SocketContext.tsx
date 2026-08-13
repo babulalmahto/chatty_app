@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import { useAuthStore } from "../stores/authStore";
+import { toast } from "sonner";
 
 type SocketContextType = {
   socket: Socket | null;
@@ -34,6 +35,16 @@ export const SocketProvider: React.FC<{ children: React.ReactNode }> = ({
 
     socketClient.on("connect", () => {
       console.log("Socket Connected", socketClient.id);
+    });
+
+    socketClient.on("connect_error", (error) => {
+      console.error("Connection error:", error);
+      toast.error("Socket connection error. Please try again.");
+    });
+
+    socketClient.on("internal_error", (error) => {
+      console.error("Connection error:", error);
+      toast.error("Socket connection error. Please try again.");
     });
 
     return () => {

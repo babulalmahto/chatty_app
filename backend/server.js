@@ -12,6 +12,7 @@ import authRoutes from "./routes/authRoutes.js";
 import conversationRoutes from "./routes/conversationRoutes.js";
 import { initalizeSocket } from "./socket.js";
 import { Server } from "socket.io";
+import { socketAuthMiddleware } from "./socket/socketAuthMiddleware.js";
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -39,6 +40,7 @@ const io = new Server(httpServer, {
   pingInterval: 25000,
   pingTimeout: 60000,
 });
+io.use(socketAuthMiddleware);
 
 await initalizeSocket(io);
 
