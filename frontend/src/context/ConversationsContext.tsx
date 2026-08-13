@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import type { User } from "../stores/authStore";
 import { useConversations } from "../hooks/useConversations";
+import { useSocketContext } from "./SocketContext";
+import { toast } from "sonner";
 
 export type Conversation = {
   conversationId: string;
@@ -43,6 +45,7 @@ export const ConversationsProvider: React.FC<{ children: React.ReactNode }> = ({
   const { data, isLoading, isError } = useConversations();
   const [conversations, setConversations] = useState<Conversation[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const { socket } = useSocketContext();
 
   useEffect(() => {
     if (data) setConversations(data.data);
@@ -53,6 +56,40 @@ export const ConversationsProvider: React.FC<{ children: React.ReactNode }> = ({
       .toLowerCase()
       .includes(searchTerm.toLowerCase()),
   );
+
+  const handleConversationOnlineStatus = ({
+    friendId,
+    username,
+    online,
+  }: {
+    friendId: string;
+    username: string;
+    online: boolean;
+  }) => {
+    setConversations((prev) => {
+      return prev.map((conversation) => {
+        if (conversation.friend.id === friendId) {
+          if (conversation.friend.online !== online) {
+            toast.info(`${username} is ${online ? "online" : "offline"}`);
+          }
+          return {
+            ...conversation,
+            friend: { ...conversation.friend, online },
+          };
+        }
+        return conversation;
+      });
+    });
+  };
+
+  useEffect(() => {
+    socket?.on("conversation:online-status", handleConversationOnlineStatus);
+    return () => {
+      socket?.off("conversation:online-status", handleConversationOnlineStatus);
+    };
+  }, [socket]);
+
+  socket?.on("conversation:online-status", handleConversationOnlineStatus);
 
   return (
     <ConversationsContext.Provider
