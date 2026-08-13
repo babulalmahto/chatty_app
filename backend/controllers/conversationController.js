@@ -38,7 +38,7 @@ class ConversationController {
   static async getConversations(req, res) {
     try {
       const userId = req.user._id;
-      console.log("friendships=====>  userId", userId);
+      // console.log("friendships=====>  userId", userId);
 
       // get friendships for this user
       const friendships = await Friendship.find({
@@ -87,10 +87,10 @@ class ConversationController {
             ? friendship.recipient
             : friendship.requester;
 
-          console.log("friend==========>", friend);
+          // console.log("friend==========>", friend);
 
           const conversation = conversationsMap.get(friend._id.toString());
-          console.log("conversation=====>", conversation);
+          console.log("conversation=====> 222222", conversation);
 
           return {
             conversationId: conversation.id,
@@ -99,10 +99,10 @@ class ConversationController {
               [friendship.requester._id.toString()]:
                 conversation.unreadCounts.get(
                   friendship.requester._id.toString(),
-                ) || 1,
+                ) || 0,
               [friendship.recipient._id.toString()]:
                 conversation.unreadCounts.get(
-                  friendship.requester._id.toString(),
+                  friendship.recipient._id.toString(),
                 ) || 0,
             },
             friend: {
