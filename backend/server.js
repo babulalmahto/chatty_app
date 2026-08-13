@@ -9,6 +9,7 @@ import http from "http";
 import { connectDB } from "./utils/db.js";
 
 import authRoutes from "./routes/authRoutes.js";
+import conversationRoutes from "./routes/conversationRoutes.js";
 
 const app = express();
 const httpServer = http.createServer(app);
@@ -25,6 +26,7 @@ app.use(express.json());
 
 // routes
 app.use("/api/auth", authRoutes);
+app.use("/api/conversations", conversationRoutes);
 
 try {
   await connectDB();

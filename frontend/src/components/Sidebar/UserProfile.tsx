@@ -22,9 +22,9 @@ const UserProfile: React.FC = () => {
     <div className="p-4 border-gray-200 flex items-center space-x-3">
       <img
         // src="https://avatar.iran.liara.run/public"
-        src="https://api.dicebear.com/9.x/adventurer/svg?seed=John"
+        src="https://api.dicebear.com/9.x/adventurer/svg?seed=Vivek"
         alt="User"
-        className="size-10 rounded-full object-cover"
+        className="size-10 rounded-full object-cover bg-gray-200"
       />
       <div className="flex-1 min-w-0">
         <h2 className="font-semibold truncate text-sm">

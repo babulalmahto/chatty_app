@@ -54,20 +54,21 @@ class AuthController {
   static async login(req, res) {
     try {
       const { email, password } = req.body;
+      console.log("req.body=====>", req.body);
 
       if (!email || !password) {
-        return res.status(400).json({ message: "Invalid credentials" });
+        return res.status(400).json({ message: "Invalid credentials 1" });
       }
 
       const user = await User.findOne({ email });
 
       if (!user) {
-        return res.status(400).json({ message: "Invalid credentials" });
+        return res.status(400).json({ message: "Invalid credentials 2" });
       }
 
       const isValidPassword = await bcrypt.compare(password, user.password);
       if (!isValidPassword) {
-        return res.status(400).json({ message: "Invalid credentials" });
+        return res.status(400).json({ message: "Invalid credentials 3" });
       }
       const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
         expiresIn: "7d",
