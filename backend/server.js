@@ -14,6 +14,8 @@ import { initalizeSocket } from "./socket.js";
 import { Server } from "socket.io";
 import { socketAuthMiddleware } from "./socket/socketAuthMiddleware.js";
 
+import RedisService from "./services/RedisService.js";
+
 const app = express();
 const httpServer = http.createServer(app);
 
@@ -43,6 +45,8 @@ const io = new Server(httpServer, {
 io.use(socketAuthMiddleware);
 
 await initalizeSocket(io);
+
+await RedisService.initialize();
 
 try {
   await connectDB();
