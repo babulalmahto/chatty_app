@@ -19,7 +19,7 @@ const UserProfile: React.FC = () => {
   };
 
   return (
-    <div className="p-4 border-gray-200 flex items-center space-x-3">
+    <div className="p-4 border-t border-gray-200 flex items-center space-x-3 transition-colors">
       <img
         // src="https://avatar.iran.liara.run/public"
         src="https://api.dicebear.com/9.x/adventurer/svg?seed=Vivek"
