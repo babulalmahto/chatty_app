@@ -47,16 +47,20 @@ const AddConversationModal: React.FC<AddConversationModalProps> = ({
   });
 
   const onSubmit = async (formData: AddConversationFormData) => {
-    const result = refetch();
+    console.log("formData==========>", formData);
+    const result = await refetch();
+    console.log("result=======>", result);
     if (result?.data?.success) {
       socket?.emit("conversation:request", {
-        connectCode: formData.conversationName,
+        // connectCode: formData.conversationName,
+        connectCode: formData.connectCode,
       });
       onClose();
     } else {
-      toast.error(
-        result?.error?.response?.data.message ?? "Invalid conversation ID",
-      );
+      //   toast.error(
+      //     result?.error?.response?.data.message ?? "Invalid conversation ID",
+      //   );
+      toast.error("Invalid conversation ID");
     }
   };
 

@@ -9,12 +9,12 @@ const ConversationItem: React.FC<Conversation> = ({
   lastMessage,
 }) => {
   const { user } = useAuthStore();
-  console.log(
-    friend,
-    "unreadCounts=====>",
-    unreadCounts,
-    user && unreadCounts[user.id] > 0,
-  );
+  // console.log(
+  //   friend,
+  //   "unreadCounts=====>",
+  //   unreadCounts,
+  //   user && unreadCounts[user.id] > 0,
+  // );
   const unreadMessage = () =>
     unreadCounts[user?.id ?? ""] > 0 || unreadCounts[friend.id] > 0;
   let displayTime;

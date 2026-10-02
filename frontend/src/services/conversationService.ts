@@ -3,6 +3,7 @@ import apiClient from "../utils/apiClient";
 export const conversationService = {
   fetchConversations: async () => {
     const response = await apiClient.get("/conversations");
+    console.log("response===========>", response);
     return response.data;
   },
   checkConnectCode: async (connectCode: string) => {
