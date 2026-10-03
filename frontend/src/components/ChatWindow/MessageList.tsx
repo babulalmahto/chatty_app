@@ -2,12 +2,17 @@ import { useEffect, useRef } from "react";
 import { useMessages } from "../../hooks/useMessages";
 import { useConversationStore } from "../../stores/conversationStore";
 import MessageItem from "./MessageItem";
+import { useAuthStore } from "../../stores/authStore";
+import { useSocketContext } from "../../context/SocketContext";
 
 const MessageList: React.FC = () => {
   const { selectedConversation } = useConversationStore();
+  const { user } = useAuthStore();
   const containerRef = useRef<HTMLDivElement | null>(null);
   const { data, isLoading, handleLoadMore, isFetchingNextPage, hasNextPage } =
     useMessages(selectedConversation?.conversationId, containerRef);
+
+  const { socket } = useSocketContext();
 
   const allMessages =
     data?.pages
@@ -26,7 +31,13 @@ const MessageList: React.FC = () => {
         }
       }, 0);
     }
-  }, [data, selectedConversation]);
+
+    socket?.emit("conversation:mark-as-read", {
+      conversationId: selectedConversation?.conversationId,
+      userId: user?.id,
+      friendId: selectedConversation?.friend.id,
+    });
+  }, [data, selectedConversation, socket, user]);
 
   if (isLoading) {
     return (

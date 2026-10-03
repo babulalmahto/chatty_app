@@ -1,8 +1,9 @@
-import RedisService from "./services/redisService.js";
+import RedisService from "./services/RedisService.js";
 import { leaveAllRooms } from "./socket/helpers.js";
 import {
   conversationRequest,
   notifyConversationOnlineStatus,
+  conversationMarkAsRead,
 } from "./socket/socketConversation.js";
 
 export const initalizeSocket = async (io) => {
@@ -18,6 +19,10 @@ export const initalizeSocket = async (io) => {
 
       socket.on("conversation:request", (data) =>
         conversationRequest(io, socket, data),
+      );
+
+      socket.on("conversation:mark-as-read", (data) =>
+        conversationMarkAsRead(io, socket, data),
       );
 
       socket.on("disconnect", async () => {
