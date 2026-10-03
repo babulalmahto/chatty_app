@@ -10,6 +10,7 @@ import { connectDB } from "./utils/db.js";
 
 import authRoutes from "./routes/authRoutes.js";
 import conversationRoutes from "./routes/conversationRoutes.js";
+import messageRoutes from "./routes/messageRoutes.js";
 import { initalizeSocket } from "./socket.js";
 import { Server } from "socket.io";
 import { socketAuthMiddleware } from "./socket/socketAuthMiddleware.js";
@@ -32,6 +33,7 @@ app.use(express.json());
 // routes
 app.use("/api/auth", authRoutes);
 app.use("/api/conversations", conversationRoutes);
+app.use("/api/conversations", messageRoutes);
 
 const io = new Server(httpServer, {
   cors: {
