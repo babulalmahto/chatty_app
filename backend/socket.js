@@ -4,6 +4,7 @@ import {
   conversationRequest,
   notifyConversationOnlineStatus,
   conversationMarkAsRead,
+  conversationSendMessage,
 } from "./socket/socketConversation.js";
 
 export const initalizeSocket = async (io) => {
@@ -23,6 +24,10 @@ export const initalizeSocket = async (io) => {
 
       socket.on("conversation:mark-as-read", (data) =>
         conversationMarkAsRead(io, socket, data),
+      );
+
+      socket.on("conversation:send-message", (data) =>
+        conversationSendMessage(io, socket, data),
       );
 
       socket.on("disconnect", async () => {
