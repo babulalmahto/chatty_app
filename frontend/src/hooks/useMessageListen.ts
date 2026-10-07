@@ -13,6 +13,7 @@ export function useMessageListen(
   const { user } = useAuthStore();
   const { socket } = useSocketContext();
   const queryClient = useQueryClient();
+  const sound = new Audio("pop.mp3");
 
   console.log("conversationId=======>", conversationId);
 
@@ -62,6 +63,15 @@ export function useMessageListen(
         },
       );
 
+      if (payload.message.sender._id !== user?.id) {
+        try {
+          sound.currentTime = 0;
+          sound.play();
+        } catch (error) {
+          console.warn("Audio playback failed", error);
+        }
+      }
+
       setTimeout(() => {
         if (!containerRef.current) return;
         containerRef.current.scrollTo({
@@ -78,5 +88,13 @@ export function useMessageListen(
       socket.off("conversation:new-message", handleNewMessage);
       socket.off("conversation:send-message:error", handleSendMessageError);
     };
-  }, [socket, user, conversationId, friendId, queryClient, containerRef]);
+  }, [
+    socket,
+    user,
+    conversationId,
+    friendId,
+    queryClient,
+    containerRef,
+    sound,
+  ]);
 }
