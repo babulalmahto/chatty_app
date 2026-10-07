@@ -1,9 +1,10 @@
 import type React from "react";
-import { EllipsisVertical } from "lucide-react";
+import { EllipsisVertical, X } from "lucide-react";
 import { useConversationStore } from "../../stores/conversationStore";
 
 const ChatHeader: React.FC = () => {
-  const { selectedConversation } = useConversationStore();
+  const { selectedConversation, setSelectedConversation } =
+    useConversationStore();
 
   return (
     <div className="p-4 border-b border-gray-200 flex items-center justify-between">
@@ -27,6 +28,12 @@ const ChatHeader: React.FC = () => {
       <div className="flex space-x-4">
         <button className="text-gray-500 hover:text-gray-700 cursor-pointer">
           <EllipsisVertical className="size-[16px]" />
+        </button>
+        <button
+          onClick={() => setSelectedConversation(null)}
+          className="sm:hidden text-gray-500 hover:text-gray-700 cursor-pointer"
+        >
+          <X className="size-4" />
         </button>
       </div>
     </div>
