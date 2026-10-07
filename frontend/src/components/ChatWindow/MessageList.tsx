@@ -16,6 +16,7 @@ const MessageList: React.FC = () => {
     useMessages(selectedConversation?.conversationId, containerRef);
 
   const { socket } = useSocketContext();
+  const previusConversationIdRef = useRef<string | null>(null);
 
   const allMessages =
     data?.pages
@@ -27,12 +28,18 @@ const MessageList: React.FC = () => {
   useEffect(() => {
     if (!selectedConversation?.conversationId) return;
 
-    if (data?.pages.length == 1) {
+    // if (data?.pages.length == 1) {
+    if (
+      data?.pages.length &&
+      previusConversationIdRef.current !== selectedConversation.conversationId
+    ) {
       setTimeout(() => {
         if (containerRef.current) {
           containerRef.current.scrollTop = containerRef.current.scrollHeight;
         }
       }, 0);
+
+      previusConversationIdRef.current = selectedConversation.conversationId;
     }
 
     socket?.emit("conversation:mark-as-read", {

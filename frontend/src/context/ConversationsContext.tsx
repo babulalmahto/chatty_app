@@ -89,6 +89,11 @@ export const ConversationsProvider: React.FC<{ children: React.ReactNode }> = ({
       return [...prev, conversation];
     });
     toast.success(`You and ${conversation.friend.username} are now friends!`);
+
+    if (socket) {
+      socket.disconnect();
+      socket.connect();
+    }
   };
 
   const handleCoversationUpdateUnreadCounts = (conversation: {
