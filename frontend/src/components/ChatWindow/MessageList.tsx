@@ -5,6 +5,8 @@ import MessageItem from "./MessageItem";
 import { useAuthStore } from "../../stores/authStore";
 import { useSocketContext } from "../../context/SocketContext";
 import { useMessageListen } from "../../hooks/useMessageListen";
+import { useTypingListen } from "../../hooks/useTypingListen";
+import TypingIndicator from "./TyoingIndicator";
 
 const MessageList: React.FC = () => {
   const { selectedConversation } = useConversationStore();
@@ -46,6 +48,11 @@ const MessageList: React.FC = () => {
     containerRef,
   );
 
+  const { isTyping } = useTypingListen(
+    selectedConversation?.friend.id,
+    containerRef,
+  );
+
   if (isLoading) {
     return (
       <div className="relative flex-1 h-full flex items-center justify-center">
@@ -77,6 +84,8 @@ const MessageList: React.FC = () => {
           <MessageItem {...message} />
         </div>
       ))}
+
+      {isTyping && <TypingIndicator />}
     </div>
   );
 };
