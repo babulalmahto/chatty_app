@@ -13,7 +13,7 @@ export function useMessageListen(
   const { user } = useAuthStore();
   const { socket } = useSocketContext();
   const queryClient = useQueryClient();
-  const sound = new Audio("pop.mp3");
+  const sound = new Audio("/pop.mp3");
 
   console.log("conversationId=======>", conversationId);
 
@@ -95,6 +95,6 @@ export function useMessageListen(
     friendId,
     queryClient,
     containerRef,
-    sound,
+    // sound,
   ]);
 }
